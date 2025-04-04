@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop Using JavaScript - Easy Tutorials</title>
+    <style>
+        .container {
+            display: flex;
+        }
+        #left, #right {
+            width: 200px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 10px;
+            padding: 10px;
+        }
+        .list {
+            background-color: lightblue;
+            margin-bottom: 5px;
+            padding: 5px;
+            cursor: move;
+        }
+        .list img {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="left">
+        <div class="list" draggable="true"><img src="drag_drop_icon.png"> List Item 1</div>
+        <div class="list" draggable="true"><img src="drag_drop_icon.png"> List Item 2</div>
+        <div class="list" draggable="true"><img src="drag_drop_icon.png"> List Item 3</div>
+        <div class="list" draggable="true"><img src="drag_drop_icon.png"> List Item 4</div>
+    </div>
+    <div id="right"></div>
+</div>
+
+<script>
+    let lists = document.getElementsByClassName("list");
+    let rightBox = document.getElementById("right");
+    let leftBox = document.getElementById("left");
+
+    for(list of lists){
+        list.addEventListener("dragstart", function(e){
+            let selected = e.target;
+
+            // Đổi màu nền khi bắt đầu kéo
+            leftBox.style.backgroundColor = "lightyellow";
+            rightBox.style.backgroundColor = "lightgreen";
+
+            rightBox.addEventListener("dragover", function(e){
+                e.preventDefault();
+            });
+
+            rightBox.addEventListener("drop", function(e){
+                rightBox.appendChild(selected);
+                selected = null;
+                // Reset màu nền khi thả phần tử
+                leftBox.style.backgroundColor = "";
+                rightBox.style.backgroundColor = "";
+            });
+
+            leftBox.addEventListener("dragover", function(e){
+                e.preventDefault();
+            });
+
+            leftBox.addEventListener("drop", function(e){
+                leftBox.appendChild(selected);
+                selected = null;
+                // Reset màu nền khi thả phần tử
+                leftBox.style.backgroundColor = "";
+                rightBox.style.backgroundColor = "";
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
